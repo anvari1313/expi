@@ -6,7 +6,7 @@ const url = process.env.MONGO_URL || 'mongodb://localhost:27017';
 
 let db = null;
 
-mongo.connect(url, (err, client) => {
+mongo.connect(url,{ useNewUrlParser: true }, (err, client) => {
   if (err) {
     console.error(err);
   }
@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
     if (err != null) {
       res.json({err: err});
     } else {
-      res.json(items)
+      res.json({result: items, t: new Date()})
     }
   })
 });

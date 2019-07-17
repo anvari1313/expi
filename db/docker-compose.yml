@@ -1,0 +1,64 @@
+#version: "3.5"
+#
+#services:
+#  mongo:
+#    image: localhost:5000/mongo:4.0.5
+#    deploy:
+#      replicas: 1
+#      placement:
+#        constraints: [node.role == manager]
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - type: bind
+#        source: /home/ahmad/docker/volumes/mongodb
+#        target: /data/db
+#    ports:
+#      - 27017:27017
+#    networks:
+#      - staging-net
+#
+#networks:
+#  staging-net:
+#    external: true
+##networks:
+##  staging-net:
+##    driver: overlay
+##    name: staging-net
+
+version: "3.7"
+
+services:
+  mongo:
+    image: localhost:5000/mongo:4.0.5
+#    secrets:
+#      - mongodb_password
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+#      resources:
+#        reservations:
+#          memory: 128M
+#        limits:
+#          memory: 256M
+#    ports:
+#      - 27017:27017
+    networks:
+      - staging-net
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: 'root'
+#      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: /home/ahmad/docker/volumes/mongodb
+        target: /data/db
+
+
+networks:
+  staging-net:
+    external: true
+#networks:
+#  staging-net:
+#    driver: overlay
+#    name: staging-net
